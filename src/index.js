@@ -42,17 +42,22 @@ const galleryLightbox = new SimpleLightbox('.gallery-item', {
 
 async function onSearch(event) {
   event.preventDefault();
-  galleryApi.query = event.currentTarget.elements.searchQuery.value;
+  gallery.innerHTML = '';
+  galleryApi.query = event.currentTarget.elements.searchQuery.value.trim();
   galleryApi.page = 1;
-
-  clearGalleryMarkupContainer();
-  const response = await galleryApi.fetchImages();
   if (galleryApi.query === '') {
     Notify.failure('Sorry, there are no search query. Please try again.');
-  } else if (response.hits.length === 0) {
+    loadMoreBtn.classList.add('is-hidden');
+    return;
+  }
+  clearGalleryMarkupContainer();
+  const response = await galleryApi.fetchImages();
+
+  if (response.hits.length === 0) {
     Notify.failure(
       'Sorry, there are no images matching your search query. Please try again.'
     );
+    loadMoreBtn.classList.add('is-hidden');
   } else appendGalleryMarkup(response.hits);
   Notify.info(`Hooray! We found ${response.totalHits} images.`);
   galleryLightbox.refresh();
