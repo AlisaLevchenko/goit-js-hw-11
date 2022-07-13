@@ -14,7 +14,7 @@ export default class GalleryApi {
   }
 
   async fetchImages() {
-    const BASE_URL = 'https://pixabay.com/api';
+    const BASE_URL = 'https://pixabay.com/api/';
     const KEY = '28583927-dad8651872b2e78bc9670c73b';
     const search = new URLSearchParams({
       key: KEY,
