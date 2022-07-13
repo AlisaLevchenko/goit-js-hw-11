@@ -13,12 +13,11 @@ export default class GalleryApi {
     this.searchQuery = newQuery;
   }
 
-  static #BASE_URL = 'https://pixabay.com/api';
-  static #KEY = '28583927-dad8651872b2e78bc9670c73b';
-
   async fetchImages() {
+    const BASE_URL = 'https://pixabay.com/api';
+    const KEY = '28583927-dad8651872b2e78bc9670c73b';
     const search = new URLSearchParams({
-      key: GalleryApi.#KEY,
+      key: KEY,
       q: this.searchQuery,
       image_type: 'photo',
       orientation: 'horizontal',
@@ -27,9 +26,7 @@ export default class GalleryApi {
       page: this.page,
     });
     try {
-      const response = await axios.get(
-        `${GalleryApi.#BASE_URL}?${search.toString()}`
-      );
+      const response = await axios.get(`${BASE_URL}?${search.toString()}`);
       return response.data;
     } catch (error) {
       throw error;
