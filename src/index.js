@@ -54,6 +54,7 @@ async function onSearch(event) {
       'Sorry, there are no images matching your search query. Please try again.'
     );
   } else appendGalleryMarkup(response.hits);
+  Notify.info(`Hooray! We found ${response.totalHits} images.`);
   galleryLightbox.refresh();
 }
 
@@ -62,6 +63,11 @@ async function onLoadMore() {
   const response = await galleryApi.fetchImages();
   appendGalleryMarkup(response.hits);
   galleryLightbox.refresh();
+  const totalPages = Math.ceil(response.totalHits / 40);
+  if (galleryApi.page === totalPages) {
+    loadMoreBtn.classList.add('is-hidden');
+    Notify.info("We're sorry, but you've reached the end of search results.");
+  }
 }
 
 function appendGalleryMarkup(response) {
