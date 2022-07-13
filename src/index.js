@@ -58,7 +58,9 @@ async function onSearch(event) {
       'Sorry, there are no images matching your search query. Please try again.'
     );
     loadMoreBtn.classList.add('is-hidden');
-  } else appendGalleryMarkup(response.hits);
+    return;
+  }
+  appendGalleryMarkup(response.hits);
   Notify.info(`Hooray! We found ${response.totalHits} images.`);
   galleryLightbox.refresh();
 }
